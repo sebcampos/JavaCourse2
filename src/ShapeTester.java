@@ -37,15 +37,15 @@ public class ShapeTester {
         for(Shape shape : shapeList) {
             System.out.println(shape);
             System.out.println(shape.getDescription());
-            System.out.println("\tArea: " + shape.area());
+            System.out.println("\tArea: " + shape.calculateArea());
 
-            // CODE MISSING: PRINT THE PERIMETER OF TWO-DIMENSIONAL SHAPES
+            // PRINTING THE PERIMETER OF TWO-DIMENSIONAL SHAPES
             if (shape instanceof TwoDimensionalShape)
             {
                 System.out.println("\tPerimeter: " + ((TwoDimensionalShape) shape).calculatePerimeter() + "\n");
             }
 
-            // CODE MISSING: PRINT THE VOLUME OF THREE-DIMENSIONAL SHAPES
+            // PRINTING THE VOLUME OF THREE-DIMENSIONAL SHAPES
             else if (shape instanceof ThreeDimensionalShape)
             {
                 System.out.println("\tVolume: " + ((ThreeDimensionalShape) shape).calculateVolume() + "\n");
@@ -57,7 +57,7 @@ public class ShapeTester {
         System.out.println("\n*****PRINTING ALL EQUAL, NON-ALIAS SHAPES");
         for(Shape firstShape : shapeList) {
             for(Shape secondShape : shapeList) {
-                // CODE MISSING: TEST IF THE TWO SHAPES ARE EQUAL (BUT NOT ALIASES!) PRINT THE SHAPES
+                // TESTING IF THE TWO SHAPES ARE EQUAL (BUT NOT ALIASES!) PRINT THE SHAPES
                 if (firstShape.equals(secondShape))
                 {
                     System.out.println("Equal shapes found:");
@@ -71,7 +71,7 @@ public class ShapeTester {
         System.out.println("\n*****PRINTING ALL CUBE/SQUARE  or Cylinder/Circle COMBINATIONS WHERE THE SQUARE IS A SIDE FOR THE CUBE");
         for(Shape firstShape : shapeList) {
             for(Shape secondShape : shapeList) {
-                // CODE MISSING: TEST THE isTopOrBottom METHOD FOR SQUARE/CUBE COMBINATIONS. PRINT ANY MATCHES FOUND.
+                // TESTING THE isTopOrBottom METHOD FOR SQUARE/CUBE COMBINATIONS. PRINT ANY MATCHES FOUND.
                 if (firstShape instanceof ThreeDimensionalShape && ((ThreeDimensionalShape)firstShape).isTopOrBottom(secondShape))
                 {
                     if (firstShape instanceof Cube)
@@ -90,15 +90,16 @@ public class ShapeTester {
             }
         }
 
-        System.out.println("\n*****PRINTING ALL COMBINATIONS OF TWO-DIMENSIONAL SHAPES THAT CAN FIT INSIDE ANOTHER");
+        System.out.println("\n*****PRINTING ALL COMBINATIONS OF TWO-DIMENSIONAL SHAPES WHOSE PERIMETERS CAN FIT INSIDE ANOTHER");
         for(Shape firstShape : shapeList) {
             for(Shape secondShape : shapeList) {
-                // EXTRA CREDIT: TEST THE canFitInside METHOD FOR PAIRS OF TWO DIMENSIONAL SHAPES. PRINT ANY SHAPES THAT NEST.
-                if ((firstShape instanceof TwoDimensionalShape) && (secondShape instanceof TwoDimensionalShape) && (((TwoDimensionalShape) secondShape).perimeterCanFitInside(firstShape)))
+                // EXTRA CREDIT: TEST THE perimeterCanFitInside METHOD FOR PAIRS OF TWO DIMENSIONAL SHAPES. PRINT ANY SHAPES THAT NEST.
+                if (secondShape.perimeterCanFitInside(firstShape))
                 {
                     System.out.println("Nested Shapes found: ");
                     System.out.println("\tOuter: " + firstShape);
                     System.out.println("\tInner: " + secondShape);
+                    System.out.println();
 
                 }
             }
@@ -107,4 +108,3 @@ public class ShapeTester {
     }
 
 }
-
