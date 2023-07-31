@@ -1,71 +1,37 @@
+
 public class Square extends Rectangle implements TwoDimensionalShape {
 
+    protected static String textDescription = "a square";
+
+    // parameterized constructor for Square
+    // pre: passed value for side length is a positive integer
     Square(int side) {
         super(side, side);
         setName("Square");
         setDescription("A quadrilateral with four equal sides and four equal angles");
     }
 
-    public int getSide() {return getBase();}
-
-
-    @Override
-    protected double area() {return calculateAreaOfFourSidedShape(getSide(), getSide());}
-
-
-    @Override
-    public String toString()
-    {
-        return getName() + " Side Length: " + getBase();
+    // pre: passed value is a positive integer
+    // post: both height and width (i.e. square side length) are modified to passed value
+    private void setSide(int side) {
+    	assert side >= 1;
+    	this.height = side; 
+    	this.width =  side;
     }
 
-    @Override
-    public double calculatePerimeter()
-    {
-        return getBase() * 4;
+    //post: returns 0 if width and height are unequal, height otherwise, for the purpose of cube face test
+    public int getSide() {
+    	if(width == height)
+    		return height;
+    	else
+    		return 0;
+    }
+    
+    //post: returns a string with both a Rectangle version name and description
+    public String getDescription() {
+    	Rectangle temp = new Rectangle(1, 2);
+    	return temp.getDescription() + "\n" + super.getDescription();
     }
 
 
-    @Override
-    public boolean perimeterCanFitInside(Shape shape)
-    {
-        // todo modify to only compare perimeter
-        if (shape instanceof Circle)
-        {
-            return calculateHypotenuse(getBase(), getBase()) < ((Circle) shape).getRadius() * 2;
-        }
-        else if (shape instanceof Square)
-        {
-            return area() < shape.area();
-        }
-        else if (shape instanceof Rectangle)
-        {
-            return area() < shape.area();
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-
-        if (o == this) {
-            return false;
-        }
-
-
-        if (!(o instanceof Square otherSquare )) {
-            return false;
-        }
-
-        if (!(getBase() == otherSquare.getSide()))
-        {
-            return false;
-        }
-        return getDescription().equalsIgnoreCase(otherSquare.getDescription());
-    }
 }
-

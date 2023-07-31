@@ -1,108 +1,72 @@
+
 public class Cylinder extends Shape implements ThreeDimensionalShape
 {
     private int radius;
     private int height;
 
-    // `has a` relationship
-    private final Circle topOrBottomCircle;
-
-    /**
-     * parameterized constructor for Cylinder
-     * both passed values for radius and height are positive integers
-     * @param radius int value
-     * @param height int value
-     */
+    // parameterized constructor for Cylinder
+    // pre: both passed values for radius and height are positive integers
     Cylinder(int radius, int height)
     {
-        topOrBottomCircle = new Circle(radius);
-        setRadiusAndHeight(radius, height);
+        setRadius(radius);
+        setHeight(height);
         setName("Cylinder");
         setDescription("A solid geometric figure with straight parallel sides and a circular or oval cross section");
     }
 
-    /**
-     * @return radius of Cylinder
-     */
-    private int getRadius() {return radius;}
+    // post: returns radius of Cylinder
+    public int getRadius() {return radius;}
+    
+    // post: returns height of Cylinder
+    public int getHeight() {return height;}
 
-
-    /**
-     * @return height of Cylinder
-     */
-    private int getHeight() {return height;}
-
-
-    /**
-     * Returns A circle which could represent the top
-     * or bottom of the Cylinder
-     * @return Instance of TwoDimensional Circle
-     */
-    private Circle getTopOrBottomCircle() {return topOrBottomCircle;}
-
-
-
+    // post: returns a string containing the name of the shape along with dimensional properties, tab-separated
     @Override
     public String toString()
     {
-        return super.toString() + " Radius: " + getRadius() + " Height: " + getHeight();
+        return super.toString() + "\tRadius: " + radius + "\tHeight: " + height;
     }
 
-    /**
-     * Sets the radius and height of the Cylinder
-     * @param radius int
-     * @param height int
-     */
-    private void setRadiusAndHeight(int radius, int height)
-    {
-        assert ((radius > 0) && (height > 0));
+    // pre: passed value for radius is a positive integer
+    // post: radius is modified according to passed value
+    public void setRadius(int radius) {
+        assert radius >= 1;
         this.radius = radius;
+    }
+    
+    // pre: passed value for height is a positive integer
+    // post: height is modified according to passed value
+    public void setHeight(int height) {
+        assert height >= 1;
         this.height = height;
     }
 
-    /**
-     * Calculates the Surface area of the Cylinder
-     * @return double, Surface area of the Cylinder
-     */
+    // post: calculates and returns the SURFACE AREA of the cylinder
     @Override
-    public double area()
+    public double calculateArea()
     {
-        double areaOfCircle =  getTopOrBottomCircle().area();
-        return 2 * Math.PI * radius * height + (2 * areaOfCircle);
+        double circleFaceArea = Math.PI * radius * radius;
+        double circumfrence = 2 * Math.PI * radius;
+        double shaftArea = circumfrence * height; 
+        // the shaft is a rectangular face coiled around the cylinder
+        return shaftArea + 2 * circleFaceArea; // cylinder has two circle faces
     }
 
-    /**
-     * Leverages the Circle Calculate Area Of A Circle method
-     * to calculate the volume of a Cylinder
-     * @return double, Volume of the Cylinder
-     */
+    // post: calculates the volume of the cylinder
     @Override
     public double calculateVolume()
     {
-        return Circle.calculateAreaOfACircle(radius) * height;
+        double baseArea = Math.PI * radius * radius;
+    	return baseArea * height;
     }
 
-    /***
-     * @param otherCircle passed Shape is 2D Circle
-     * @return  a boolean whether the passed Shape may be one of the flat faces of the calling 3D object
-     */
+    // pre: passed Shape is 2D
+    // post: returns a boolean whether the passed Shape may be one of the flat faces of the calling 3D object
     @Override
     public boolean isTopOrBottom(Shape otherCircle)
     {
-        return otherCircle.equals(getTopOrBottomCircle());
-    }
-
-    public boolean equals(Object o) {
-        if (o == this) {
-            return false;
-        }
-        if (!(o instanceof Cylinder otherCylinder)) {
-            return false;
-        }
-
-        if (!(radius == otherCylinder.getRadius())) {
-            return false;
-        }
-        return getDescription().equalsIgnoreCase(otherCylinder.getDescription());
+        Circle currentCircle = new Circle(radius);
+        return otherCircle.equals(currentCircle);
     }
 
 }
