@@ -1,4 +1,4 @@
 interface ThreeDimensionalShape  {
     double calculateVolume();
-    boolean isTopOrBottom(Shape threeDimensionalShape);
+    boolean isTopOrBottom(Shape twoDimensionalShape);
 }
